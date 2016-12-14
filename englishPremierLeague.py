@@ -9,28 +9,29 @@ app = Flask(__name__)
 
 
 @app.route('/')
-def main():
-    
+def main():    
     return render_template('mainMenu.html')
 
 
 @app.route("/enleaguetable/")
 def enleaguetable():
-    data = getLeagueTable()
+    data = getLeagueTable('http://www.football-data.co.uk/mmz4281/1617/E0.csv')
+    return render_template('enleaguetable.html', data=data)
+
+@app.route("/championship/")
+def championshiptable():
+    data = getLeagueTable('http://www.football-data.co.uk/mmz4281/1617/E1.csv')
     return render_template('enleaguetable.html', data=data)
 
 
-
-def getListOfGames():
-    URL = 'http://www.football-data.co.uk/mmz4281/1617/E0.csv'
-
+def getListOfGames(URL):
     response = urllib.request.urlopen(URL)
     listOfGames = [{k : v for k, v in row.items()} for row in
                    csv.DictReader(codecs.iterdecode(response, 'utf-8'), skipinitialspace=True)]
     return listOfGames
 
-def getLeagueTable():
-    listOfGames = getListOfGames()
+def getLeagueTable(URL):
+    listOfGames = getListOfGames(URL)
     setOfTeams = set()
 
     for game in listOfGames:
