@@ -6,42 +6,53 @@ from flask import Flask, render_template, json
 
 app = Flask(__name__)
 
-
-
 @app.route("/")
 def main():  
     return render_template('mainMenu.html')
-
 
 @app.route("/enleaguetable/")
 def enleaguetable():
     data = getLeagueTable()
     return render_template('enleaguetable.html', data=data)
 
-
 def getListOfGames():
     URL = 'http://www.football-data.co.uk/mmz4281/1617/E0.csv'
-
     response = urllib.request.urlopen(URL)
-    listOfGames = [{k : v for k, v in row.items()} for row in
-                   csv.DictReader(codecs.iterdecode(response, 'utf-8'), skipinitialspace=True)]
+    listOfGames = [{k : v for k, v in row.items()}
+                   for row in csv.DictReader(codecs.iterdecode
+                    (response, 'utf-8'),skipinitialspace=True)]
     return listOfGames
 
+def getRefereeTable():
+    listOfGames = getListOfGames()
+    setOfRefs = set()
 
+    for game in listOfGames:
+        setOfRefs.add(game['Referee'])
+
+    refDict = {}
+
+    for ref in setOfRefs:
+        refDict[ref] = [0,0,0]
+
+    for game in listOfGames:
+        refDict[game['Referee']][0] += (int(game['HF']) + int(game['AF']))
+        refDict[game['Referee']][1] += (int(game['HY']) + int(game['AY']))
+        refDict[game['Referee']][2] += (int(game['HR']) + int(game['AR']))
+
+    return sorted(refDict.items(), key=lambda x: (x[1][2], x[1][1], x[1][0]), reverse=True)
+        
 
 def getLeagueTable():
     listOfGames = getListOfGames()
     setOfTeams = set()
-
+    
     for game in listOfGames:
         setOfTeams.add(game['HomeTeam'])
 
     teamDict = {}
 
     for team in setOfTeams:
-        #teamDict[team] = {'Games': 0, 'Wins': 0, 'Losses': 0,
-        #                   'Draws': 0, 'GoalsScored': 0, 'GoalsConceded': 0,
-        #                   'GoalDifference': 0, 'Points': 0}
         teamDict[team] = [0,0,0,0,0,0,0,0]
 
     for game in listOfGames:
@@ -67,9 +78,7 @@ def getLeagueTable():
             teamDict[game['AwayTeam']][7] += 1
             teamDict[game['HomeTeam']][7] += 1
 
-
     return sorted(teamDict.items(), key=lambda x: (x[1][7], x[1][6]), reverse=True)
-
 
 if __name__ == "__main__":
     app.run()
