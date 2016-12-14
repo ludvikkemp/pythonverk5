@@ -6,13 +6,18 @@ from flask import Flask, render_template, json
 
 app = Flask(__name__)
 
+
+
+@app.route('/')
+def main():
+    
+    return render_template('mainMenu.html')
+
+
 @app.route("/enleaguetable/")
 def enleaguetable():
     data = getLeagueTable()
     return render_template('enleaguetable.html', data=data)
-
-
-
 
 
 
