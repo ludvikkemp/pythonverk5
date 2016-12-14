@@ -6,11 +6,24 @@ from flask import Flask, render_template, json
 
 app = Flask(__name__)
 
+
+
+@app.route('/')
+def main():
+    
+    return render_template('mainMenu.html')
+
+
 @app.route("/enleaguetable/")
 def enleaguetable():
     data = getLeagueTable()
     return render_template('enleaguetable.html', data=data)
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 74e2b71a4fed4bf87e99dab50e34f06eb3ef74e6
 def getListOfGames():
     URL = 'http://www.football-data.co.uk/mmz4281/1617/E0.csv'
 
