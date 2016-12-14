@@ -11,11 +11,6 @@ def enleaguetable():
     data = getLeagueTable()
     return render_template('enleaguetable.html', data=data)
 
-
-
-
-
-
 def getListOfGames():
     URL = 'http://www.football-data.co.uk/mmz4281/1617/E0.csv'
 
@@ -23,6 +18,8 @@ def getListOfGames():
     listOfGames = [{k : v for k, v in row.items()} for row in
                    csv.DictReader(codecs.iterdecode(response, 'utf-8'), skipinitialspace=True)]
     return listOfGames
+
+
 
 def getLeagueTable():
     listOfGames = getListOfGames()
