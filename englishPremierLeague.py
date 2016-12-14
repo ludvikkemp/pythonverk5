@@ -15,12 +15,12 @@ def main():
 
 @app.route("/enleaguetable/")
 def enleaguetable():
-    data = getLeagueTable('http://www.football-data.co.uk/mmz4281/1617/E0.csv')
+    data = [getLeagueTable('http://www.football-data.co.uk/mmz4281/1617/E0.csv'), 'English Premier League Table 2016-17']
     return render_template('enleaguetable.html', data=data)
 
 @app.route("/championship/")
 def championshiptable():
-    data = getLeagueTable('http://www.football-data.co.uk/mmz4281/1617/E1.csv')
+    data = [getLeagueTable('http://www.football-data.co.uk/mmz4281/1617/E1.csv'), 'Championship Table 2016-17']
     return render_template('enleaguetable.html', data=data)
 
 

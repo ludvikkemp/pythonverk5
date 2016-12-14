@@ -11,7 +11,7 @@
   	</head>
   		<div class="panel panel-default">
 	  		<div class="table-responsive">
-	  			<div class="panel-heading"><h2>English Premier League Table 2016-17</h2></div>
+	  			<div class="panel-heading"><h2>{{data[1]}}</h2></div>
 		  		<table class="table">
 		  			<tr>
 		  				<th>TEAMS</th>
@@ -24,7 +24,7 @@
 		  				<th>GOAL DIFFERENCE</th>
 		  				<th>POINTS</th>
 		  			</tr>
-				  	{% for i in data %}
+				  	{% for i in data[0] %}
 					<tr>
 				    	
 				    	<td>{{ i[0] }}</td>
