@@ -8,7 +8,7 @@ from collections import defaultdict
 
 app = Flask(__name__)
 
-def main():
+def mainFetchData():
     url = 'http://www.football-data.co.uk/englandm.php'
     page = urllib.request.urlopen(url)
     soup = BeautifulSoup(page, 'html.parser')
@@ -46,63 +46,40 @@ def main():
 
         
 @app.route('/')
-def mainMenu():
-    data = main()
+def main():
+    data = mainFetchData()
     return render_template('mainMenu.html', data=data)
 
 
 @app.route("/enleaguetable/")
 def enleaguetable():
-    URL = 'http://www.football-data.co.uk/mmz4281/1617/E0.csv'
-    data = [getLeagueTable(URL), 'English Premier League Table 2016-17',
-            getRefereeTable(URL), 'EPL Referee Stats Table 2016-17']
+    data = [getLeagueTable('http://www.football-data.co.uk/mmz4281/1617/E0.csv'), 'English Premier League Table 2016-17']
     return render_template('enleaguetable.html', data=data)
 
 @app.route("/championship/")
 def championshiptable():
-    URL = 'http://www.football-data.co.uk/mmz4281/1617/E1.csv'
-    data = [getLeagueTable(URL), 'Championship Table 2016-17',
-            getRefereeTable(URL), 'Championship Referee Stats Table 2016-17']
+    data = [getLeagueTable('http://www.football-data.co.uk/mmz4281/1617/E1.csv'), 'Championship Table 2016-17']
     return render_template('enleaguetable.html', data=data)
-
 
 def getListOfGames(URL):
     response = urllib.request.urlopen(URL)
-    listOfGames = [{k : v for k, v in row.items()}
-                   for row in csv.DictReader(codecs.iterdecode
-                    (response, 'utf-8'),skipinitialspace=True)]
+    listOfGames = [{k : v for k, v in row.items()} for row in
+                   csv.DictReader(codecs.iterdecode(response, 'utf-8'), skipinitialspace=True)]
     return listOfGames
-
-def getRefereeTable(URL):
-    listOfGames = getListOfGames(URL)
-    setOfRefs = set()
-
-    for game in listOfGames:
-        setOfRefs.add(game['Referee'])
-
-    refDict = {}
-
-    for ref in setOfRefs:
-        refDict[ref] = [0,0,0]
-
-    for game in listOfGames:
-        refDict[game['Referee']][0] += (int(game['HF']) + int(game['AF']))
-        refDict[game['Referee']][1] += (int(game['HY']) + int(game['AY']))
-        refDict[game['Referee']][2] += (int(game['HR']) + int(game['AR']))
-
-    return sorted(refDict.items(), key=lambda x: (x[1][2], x[1][1], x[1][0]), reverse=True)
 
 def getLeagueTable(URL):
     listOfGames = getListOfGames(URL)
-
     setOfTeams = set()
-    
+
     for game in listOfGames:
         setOfTeams.add(game['HomeTeam'])
 
     teamDict = {}
 
     for team in setOfTeams:
+        #teamDict[team] = {'Games': 0, 'Wins': 0, 'Losses': 0,
+        #                   'Draws': 0, 'GoalsScored': 0, 'GoalsConceded': 0,
+        #                   'GoalDifference': 0, 'Points': 0}
         teamDict[team] = [0,0,0,0,0,0,0,0]
 
     for game in listOfGames:
@@ -128,7 +105,9 @@ def getLeagueTable(URL):
             teamDict[game['AwayTeam']][7] += 1
             teamDict[game['HomeTeam']][7] += 1
 
+
     return sorted(teamDict.items(), key=lambda x: (x[1][7], x[1][6]), reverse=True)
+
 
 if __name__ == "__main__":
     app.run()
