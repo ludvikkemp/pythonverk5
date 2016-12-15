@@ -53,12 +53,7 @@ def main():
     return render_template('mainMenu.html', data=data)
 
 
-<<<<<<< HEAD
-@app.route("/enleaguetable/<csv>")
-def enleaguetable(csv):
-    URL = 'http://www.football-data.co.uk/' + csv
-    data = [getLeagueTable(URL), 'English Premier League Table 2016-17',
-=======
+
 
 def getData(seasonLeague):
     for season in data:
@@ -73,7 +68,6 @@ def leaguetable(league):
     csv = getData(league)
     URL = 'http://www.football-data.co.uk/'+ csv
     tabledata = [getLeagueTable(URL), 'English Premier League Table 2016-17',
->>>>>>> 08275712f7c654e8c072756711a895622e53cdf8
             getRefereeTable(URL), 'EPL Referee Stats Table 2016-17']
     return render_template('enleaguetable.html', data=tabledata)
 
