@@ -9,6 +9,9 @@
 		<!-- Optional theme -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
   	</head>
+	  	<form>
+			<button class="btn btn-success" formaction="{{ url_for('main')}}">Home</button>
+		</form>
   		<div class="panel panel-default">
 	  		<div class="table-responsive">
 	  			<div class="panel-heading"><h2>{{data[1]}}</h2></div>
@@ -26,21 +29,36 @@
 		  			</tr>
 				  	{% for i in data[0] %}
 					<tr>
-				    	
 				    	<td>{{ i[0] }}</td>
 				    	{% for h in i[1] %}
 				    	<td>{{ h }}</td>
 				    	{% endfor %}
-				    	
-
 				  	</tr>
 				  	{% endfor %}
 				</table>
 			</div>
 		</div>
-		<form>
-			<button class="btn btn-success" formaction="http://127.0.0.1:5000/">Home</button>
-		</form>
+		<div class="panel panel-default">
+	  		<div class="table-responsive">
+	  			<div class="panel-heading"><h2>{{data[3]}}</h2></div>
+		  		<table class="table">
+		  			<tr>
+		  				<th>REFEREE</th>
+		  				<th>NUMBER OF FOULS GIVEN</th>
+		  				<th>NUMBER OF YELLOW CARDS GIVEN</th>
+		  				<th>NUMBER OG RED CARDS GIVEN</th>
+		  			</tr>
+				  	{% for i in data[2] %}
+					<tr>
+				    	<td>{{ i[0] }}</td>
+				    	{% for h in i[1] %}
+				    	<td>{{ h }}</td>
+				    	{% endfor %}
+				  	</tr>
+				  	{% endfor %}
+				</table>
+			</div>
+		</div>
   	</body>
 </html>
 

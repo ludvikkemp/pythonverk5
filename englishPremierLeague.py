@@ -13,13 +13,18 @@ def main():
 
 @app.route("/enleaguetable/")
 def enleaguetable():
-    data = [getLeagueTable('http://www.football-data.co.uk/mmz4281/1617/E0.csv'), 'English Premier League Table 2016-17']
+    URL = 'http://www.football-data.co.uk/mmz4281/1617/E0.csv'
+    data = [getLeagueTable(URL), 'English Premier League Table 2016-17',
+            getRefereeTable(URL), 'EPL Referee Stats Table 2016-17']
     return render_template('enleaguetable.html', data=data)
 
 @app.route("/championship/")
 def championshiptable():
-    data = [getLeagueTable('http://www.football-data.co.uk/mmz4281/1617/E1.csv'), 'Championship Table 2016-17']
+    URL = 'http://www.football-data.co.uk/mmz4281/1617/E1.csv'
+    data = [getLeagueTable(URL), 'Championship Table 2016-17',
+            getRefereeTable(URL), 'Championship Referee Stats Table 2016-17']
     return render_template('enleaguetable.html', data=data)
+
 
 def getListOfGames(URL):
     response = urllib.request.urlopen(URL)
@@ -28,8 +33,8 @@ def getListOfGames(URL):
                     (response, 'utf-8'),skipinitialspace=True)]
     return listOfGames
 
-def getRefereeTable():
-    listOfGames = getListOfGames()
+def getRefereeTable(URL):
+    listOfGames = getListOfGames(URL)
     setOfRefs = set()
 
     for game in listOfGames:
