@@ -6,17 +6,22 @@ from flask import Flask, render_template, json
 
 app = Flask(__name__)
 
+
 @app.route("/")
 def main():  
     return render_template('mainMenu.html')
 
 @app.route("/enleaguetable/")
 def enleaguetable():
-    data = getLeagueTable()
+    data = [getLeagueTable('http://www.football-data.co.uk/mmz4281/1617/E0.csv'), 'English Premier League Table 2016-17']
     return render_template('enleaguetable.html', data=data)
 
-def getListOfGames():
-    URL = 'http://www.football-data.co.uk/mmz4281/1617/E0.csv'
+@app.route("/championship/")
+def championshiptable():
+    data = [getLeagueTable('http://www.football-data.co.uk/mmz4281/1617/E1.csv'), 'Championship Table 2016-17']
+    return render_template('enleaguetable.html', data=data)
+
+def getListOfGames(URL):
     response = urllib.request.urlopen(URL)
     listOfGames = [{k : v for k, v in row.items()}
                    for row in csv.DictReader(codecs.iterdecode
@@ -41,10 +46,10 @@ def getRefereeTable():
         refDict[game['Referee']][2] += (int(game['HR']) + int(game['AR']))
 
     return sorted(refDict.items(), key=lambda x: (x[1][2], x[1][1], x[1][0]), reverse=True)
-        
 
-def getLeagueTable():
-    listOfGames = getListOfGames()
+def getLeagueTable(URL):
+    listOfGames = getListOfGames(URL)
+
     setOfTeams = set()
     
     for game in listOfGames:
