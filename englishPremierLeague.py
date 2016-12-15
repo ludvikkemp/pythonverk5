@@ -53,6 +53,7 @@ def main():
 
 
 
+
 def getData(seasonLeague):
     for season in data:
         for league in season[1]:
