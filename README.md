@@ -30,15 +30,15 @@ Running on http://PORT_NUMBER/ (Press CTRL+C to quit)
 
 ## How the script works:
 The program fetches information on every football match played in all the English
-leagues and calculates results. The results are the displayed in a table on the website 
-
-
+leagues and calculates results. The results are the displayed in a table in the html
+files. All information is automatically updated when the website that provites the
+data is updated. 
 
 ## Notes for Football Data
 
 All data is in csv format, ready for use within standard spreadsheet applications. Please note that some abbreviations are no longer in use (in particular odds from specific bookmakers no longer used) and refer to data collected in earlier seasons. For a current list of what bookmakers are included in the dataset please visit [football-data.co.uk](http://www.football-data.co.uk/matches.php)
 
-An example csv file comes in the project directoryband is called E0.csv if you want to look at the data
+An example csv file comes in the project directory band is called E0.csv if you want to look at the data
 
 #### Key to results data:
 
@@ -72,3 +72,11 @@ An example csv file comes in the project directoryband is called E0.csv if you w
 * AY = Away Team Yellow Cards
 * HR = Home Team Red Cards
 * AR = Away Team Red Cards
+
+### Files in Project
+
+* E0.csv
+* footballLeagues.py
+* README.md
+* templates/enleaguetable.html
+* templates/mainMenu.html
