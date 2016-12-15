@@ -2,13 +2,11 @@
 
 ## Displaying All League Tables in English Football
 
-=============================================================
-
 ### Before runnig the script Flask and BeautifulSoup are required
 -------------------------------------------------------------
 
 ### How to install required packages
-### Run the following commands in your Terminal/Command Prompt
+#### Run the following commands in your Terminal/Command Prompt
 
 For Windows:
 * Flask: py -m pip install flask
@@ -21,16 +19,14 @@ For Linux and Mac:
 ==============================================================
 
 ### After installation run the script in your Terminal/Command Prompt:
----------------------------------------------------------------------
 
 * Windows: py footballLeagues.py
 * Linux/Mac: python3 footballLeagues.py
----------------------------------------------------------------------
 
-## When the script is runnig you should see following text:
+### When the script is runnig you should see following text:
 
-* Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
----------------------------------------------------------------------
+Running on http://PORT_NUMBER/ (Press CTRL+C to quit)
+
 
 ## How the script works:
 The program fetches information on every football match played in all the English
