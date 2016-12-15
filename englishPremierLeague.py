@@ -8,7 +8,7 @@ from collections import defaultdict
 
 app = Flask(__name__)
 
-def main():
+def mainFetchData():
     url = 'http://www.football-data.co.uk/englandm.php'
     page = urllib.request.urlopen(url)
     soup = BeautifulSoup(page, 'html.parser')
@@ -46,8 +46,8 @@ def main():
 
         
 @app.route('/')
-def mainMenu():
-    data = main()
+def main():
+    data = mainFetchData()
     return render_template('mainMenu.html', data=data)
 
 
