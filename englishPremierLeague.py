@@ -8,7 +8,6 @@ from collections import defaultdict
 
 app = Flask(__name__)
 
-<<<<<<< HEAD
 def main():
     url = 'http://www.football-data.co.uk/englandm.php'
     page = urllib.request.urlopen(url)
@@ -50,12 +49,7 @@ def main():
 def mainMenu():
     data = main()
     return render_template('mainMenu.html', data=data)
-=======
 
-@app.route("/")
-def main():  
-    return render_template('mainMenu.html')
->>>>>>> 43cfb64b91c4f05360ca1584177e8ff423ca3920
 
 @app.route("/enleaguetable/")
 def enleaguetable():
