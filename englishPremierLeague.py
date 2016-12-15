@@ -34,7 +34,7 @@ def mainFetchData():
         if (flagCounter % numberOfLeaguesInSeason) == 0 and flagCounter != 0 and flag == True:
             seasonsCounter += 1
             
-        leaguesInSeasons[seasons[seasonsCounter].text].append((leagues[leaguesCounter]['href'], leagues[leaguesCounter].text))
+        leaguesInSeasons[seasons[seasonsCounter].text.replace('/','-')].append((leagues[leaguesCounter]['href'], leagues[leaguesCounter].text))
 
         if flag == True:
             flagCounter += 1
@@ -44,26 +44,42 @@ def mainFetchData():
 
     return leaguesInSeasonsSorted
 
+data = mainFetchData()
+
         
 @app.route('/')
 def main():
-    data = mainFetchData()
+    #data = mainFetchData()
     return render_template('mainMenu.html', data=data)
 
 
+<<<<<<< HEAD
 @app.route("/enleaguetable/<csv>")
 def enleaguetable(csv):
     URL = 'http://www.football-data.co.uk/' + csv
     data = [getLeagueTable(URL), 'English Premier League Table 2016-17',
-            getRefereeTable(URL), 'EPL Referee Stats Table 2016-17']
-    return render_template('enleaguetable.html', data=data)
+=======
 
-@app.route("/championship/")
-def championshiptable():
-    URL = 'http://www.football-data.co.uk/mmz4281/1617/E1.csv'
-    data = [getLeagueTable(URL), 'Championship Table 2016-17',
-            getRefereeTable(URL), 'Championship Referee Stats Table 2016-17']
-    return render_template('enleaguetable.html', data=data)
+def getData(seasonLeague):
+    for season in data:
+        for league in season[1]:
+            if season[0] + league[1] == seasonLeague:
+                return league[0]
+    
+
+
+@app.route("/leaguetable/<league>")
+def leaguetable(league):
+    csv = getData(league)
+    URL = 'http://www.football-data.co.uk/'+ csv
+    tabledata = [getLeagueTable(URL), 'English Premier League Table 2016-17',
+>>>>>>> 08275712f7c654e8c072756711a895622e53cdf8
+            getRefereeTable(URL), 'EPL Referee Stats Table 2016-17']
+    return render_template('enleaguetable.html', data=tabledata)
+
+
+
+
 
 
 def getListOfGames(URL):
