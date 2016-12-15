@@ -7,9 +7,9 @@
 ### Before runnig the script Flask and BeautifulSoup are required
 -------------------------------------------------------------
 
-## How to install required packages
-## Run the following commands in your Terminal/Command Prompt
-----------------------------------------------------------
+### How to install required packages
+### Run the following commands in your Terminal/Command Prompt
+
 For Windows:
 * Flask: py -m pip install flask
 * BeautifulSoup: py -m pip install BeautifulSoup4
@@ -33,7 +33,6 @@ For Linux and Mac:
 ---------------------------------------------------------------------
 
 ## How the script works:
----------------------------------------------------------------------------------------
 The program fetches information on every football match played in all the English
 leagues and calculates the results. The results are the calculated and displayed
 as the league table stands.
@@ -45,7 +44,7 @@ Notes for Football Data
 
 All data is in csv format, ready for use within standard spreadsheet applications. Please note that some abbreviations are no longer in use (in particular odds from specific bookmakers no longer used) and refer to data collected in earlier seasons. For a current list of what bookmakers are included in the dataset please visit [football-data.co.uk](http://www.football-data.co.uk/matches.php)
 
-## Key to results data:
+#### Key to results data:
 
 * Div = League Division
 * Date = Match Date (dd/mm/yy)
@@ -58,7 +57,7 @@ All data is in csv format, ready for use within standard spreadsheet application
 * HTAG = Half Time Away Team Goals
 * HTR = Half Time Result (H=Home Win, D=Draw, A=Away Win)
 
-### Match Statistics (where available)
+#### Match Statistics (where available)
 * Attendance = Crowd Attendance
 * Referee = Match Referee
 * HS = Home Team Shots
