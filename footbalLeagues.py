@@ -75,7 +75,7 @@ def getListOfGames(URL):
     response = urllib.request.urlopen(URL)
     listOfGames = [{k : v for k, v in row.items()}
                    for row in csv.DictReader(codecs.iterdecode
-                    (response, 'utf-8'),skipinitialspace=True)]
+                    (response, 'latin1'),skipinitialspace=True)]
     return listOfGames
 
 def getRefereeTable(URL):
@@ -89,11 +89,12 @@ def getRefereeTable(URL):
 
     for ref in setOfRefs:
         refDict[ref] = [0,0,0]
-
+    
     for game in listOfGames:
-        refDict[game['Referee']][0] += (int(game['HF']) + int(game['AF']))
-        refDict[game['Referee']][1] += (int(game['HY']) + int(game['AY']))
-        refDict[game['Referee']][2] += (int(game['HR']) + int(game['AR']))
+        if 'HF' in game:    
+            refDict[game['Referee']][0] += (int(game['HF'] or 0) + int(game['AF'] or 0))
+        refDict[game['Referee']][1] += (int(game['HY'] or 0) + int(game['AY'] or 0))
+        refDict[game['Referee']][2] += (int(game['HR'] or 0) + int(game['AR'] or 0))
 
     return sorted(refDict.items(), key=lambda x: (x[1][2], x[1][1], x[1][0]), reverse=True)
 
@@ -113,12 +114,12 @@ def getLeagueTable(URL):
     for game in listOfGames:
         teamDict[game['HomeTeam']][0] += 1
         teamDict[game['AwayTeam']][0] += 1
-        teamDict[game['HomeTeam']][4] += int(game['FTHG'])
-        teamDict[game['AwayTeam']][4] += int(game['FTAG'])
-        teamDict[game['HomeTeam']][5] += int(game['FTAG'])
-        teamDict[game['AwayTeam']][5] += int(game['FTHG'])
-        teamDict[game['HomeTeam']][6] += (int(game['FTHG']) - int(game['FTAG']))
-        teamDict[game['AwayTeam']][6] += (int(game['FTAG']) - int(game['FTHG']))
+        teamDict[game['HomeTeam']][4] += int(game['FTHG'] or 0)
+        teamDict[game['AwayTeam']][4] += int(game['FTAG'] or 0)
+        teamDict[game['HomeTeam']][5] += int(game['FTAG'] or 0)
+        teamDict[game['AwayTeam']][5] += int(game['FTHG'] or 0)
+        teamDict[game['HomeTeam']][6] += (int(game['FTHG'] or 0) - int(game['FTAG'] or 0))
+        teamDict[game['AwayTeam']][6] += (int(game['FTAG'] or 0) - int(game['FTHG'] or 0))
         if game['FTR'] == 'H':
             teamDict[game['HomeTeam']][1] += 1
             teamDict[game['HomeTeam']][7] += 3
