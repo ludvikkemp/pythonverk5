@@ -49,7 +49,6 @@ data = mainFetchData()
         
 @app.route('/')
 def main():
-    #data = mainFetchData()
     return render_template('mainMenu.html', data=data)
 
 
@@ -66,13 +65,9 @@ def getData(seasonLeague):
 def leaguetable(league):
     csv = getData(league)
     URL = 'http://www.football-data.co.uk/'+ csv
-    tabledata = [getLeagueTable(URL), 'English Premier League Table 2016-17',
-            getRefereeTable(URL), 'EPL Referee Stats Table 2016-17']
+    tabledata = [getLeagueTable(URL), league[16:],
+            getRefereeTable(URL), 'Referee Stats']
     return render_template('enleaguetable.html', data=tabledata)
-
-
-
-
 
 
 def getListOfGames(URL):
