@@ -3,13 +3,59 @@ import urllib.request
 import codecs
 import json
 from flask import Flask, render_template, json
+from bs4 import BeautifulSoup
+from collections import defaultdict
 
 app = Flask(__name__)
 
+<<<<<<< HEAD
+def main():
+    url = 'http://www.football-data.co.uk/englandm.php'
+    page = urllib.request.urlopen(url)
+    soup = BeautifulSoup(page, 'html.parser')
+    
+    tableRow = soup.find_all('td', attrs={'valign':'top'})[2]
+
+    seasons = tableRow.find_all('i')[1:]
+    leagues = tableRow.find_all('a')[6:-1]
+
+    seasonsCounter = 0
+    leaguesCounter = 0
+    numberOfLeaguesInSeason = 5
+    leaguesInSeasons = defaultdict(list)
+    flag = False
+    flagCounter = 0
+    for league in leagues:
+        if seasonsCounter == 11:
+            numberOfLeaguesInSeason = 4
+            flag = True
+
+        if (leaguesCounter % numberOfLeaguesInSeason) == 0 and leaguesCounter != 0 and flag == False:
+            seasonsCounter += 1
+        if (flagCounter % numberOfLeaguesInSeason) == 0 and flagCounter != 0 and flag == True:
+            seasonsCounter += 1
+            
+        leaguesInSeasons[seasons[seasonsCounter].text].append((leagues[leaguesCounter]['href'], leagues[leaguesCounter].text))
+
+        if flag == True:
+            flagCounter += 1
+        leaguesCounter += 1
+
+    leaguesInSeasonsSorted = sorted(leaguesInSeasons.items(), reverse=True)
+
+    return leaguesInSeasonsSorted
+
+        
+@app.route('/')
+def mainMenu():
+    data = main()
+    return render_template('mainMenu.html', data=data)
+=======
 
 @app.route("/")
 def main():  
     return render_template('mainMenu.html')
+>>>>>>> 43cfb64b91c4f05360ca1584177e8ff423ca3920
 
 @app.route("/enleaguetable/")
 def enleaguetable():

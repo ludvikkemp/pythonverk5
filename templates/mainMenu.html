@@ -12,20 +12,20 @@
   		<div class="panel panel-default">
 	  		<div class="table-responsive">
 	  			<div class="panel-heading"><h2>IFDB - Internet Footbal DataBase</h2></div>
-
+	  			{% for season in data %}
+	  			<h3>{{season[0]}}</h3>
 		  		<table class="table">
 					<tr>
 						<th>Table</th>
 						<th>Direct Link</th>
 					</tr>
+					{%for row in season[1]%}
 					<tr>
-						<td>English Premier League</td>
-						<td><a href="http://127.0.0.1:5000/enleaguetable">Link</a></td>
+						<td>{{row[1]}}</td>
+						<td><a href="{{row[0]}}">Link</a></td>
 					</tr>
-					<tr>
-						<td>Championship League</td>
-						<td><a href="http://127.0.0.1:5000/championship">Link</a></td>
-					</tr>
+					{% endfor %}
   				</table>
+  				{% endfor %}
   	</body>
 </html>
