@@ -32,7 +32,20 @@ Running on http://PORT_NUMBER/ (Press CTRL+C to quit)
 The program fetches information on every football match played in all the English
 leagues and calculates results. The results are the displayed in a table in the html
 files. All information is automatically updated when the website that provites the
-data is updated. 
+data is updated.
+
+The first step is to take all the data from the csv file and read it into a list of dictionaries. So basically
+we have a list of every football game in that particular league. Each list item has a key and a value for examlpe:
+{'HomeTeam' : 'Liverpool'}
+
+The script iterates through every game to gather data for each team to keep count of points, goals, wins etc
+and displayes the current state of a certain league table. It does so not only to leagues that are still being
+played but also from previous years.
+
+There is so much info on each game that the possibilities for making all kinds of stats are almost endless.
+A list og explaination for a few of them can be found later in this document. We decided to include a list
+of referees sorted by how strict they are. Firstly on red card, then on yellow card and finally on how many
+fouls they gave. No real reason for that exactly except to furfill our own curiousity :) 
 
 ## Notes for Football Data
 

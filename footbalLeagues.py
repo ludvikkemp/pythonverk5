@@ -8,6 +8,20 @@ from collections import defaultdict
 
 app = Flask(__name__)
 
+@app.route('/')
+def main():
+    return render_template('mainMenu.html', data=data)
+
+@app.route("/leaguetable/<league>")
+def leaguetable(league):
+    csv = getData(league)
+    URL = 'http://www.football-data.co.uk/' + csv
+
+    tabledata = [getLeagueTable(URL), league[16:],
+                 getRefereeTable(URL), 'Referee Stats']
+
+    return render_template('enleaguetable.html', data=tabledata)
+
 def mainFetchData():
     url = 'http://www.football-data.co.uk/englandm.php'
     page = urllib.request.urlopen(url)
@@ -24,6 +38,7 @@ def mainFetchData():
     leaguesInSeasons = defaultdict(list)
     flag = False
     flagCounter = 0
+
     for league in leagues:
         if seasonsCounter == 11:
             numberOfLeaguesInSeason = 4
@@ -31,10 +46,11 @@ def mainFetchData():
 
         if (leaguesCounter % numberOfLeaguesInSeason) == 0 and leaguesCounter != 0 and flag == False:
             seasonsCounter += 1
+
         if (flagCounter % numberOfLeaguesInSeason) == 0 and flagCounter != 0 and flag == True:
             seasonsCounter += 1
-            
-        leaguesInSeasons[seasons[seasonsCounter].text.replace('/','-')].append((leagues[leaguesCounter]['href'], leagues[leaguesCounter].text))
+
+        leaguesInSeasons[seasons[seasonsCounter].text.replace('/','-')].append((leagues[leaguesCounter]['href'],leagues[leaguesCounter].text))
 
         if flag == True:
             flagCounter += 1
@@ -45,31 +61,6 @@ def mainFetchData():
     return leaguesInSeasonsSorted
 
 data = mainFetchData()
-
-        
-@app.route('/')
-def main():
-    return render_template('mainMenu.html', data=data)
-
-
-
-
-def getData(seasonLeague):
-    for season in data:
-        for league in season[1]:
-            if season[0] + league[1] == seasonLeague:
-                return league[0]
-    
-
-
-@app.route("/leaguetable/<league>")
-def leaguetable(league):
-    csv = getData(league)
-    URL = 'http://www.football-data.co.uk/'+ csv
-    tabledata = [getLeagueTable(URL), league[16:],
-            getRefereeTable(URL), 'Referee Stats']
-    return render_template('enleaguetable.html', data=tabledata)
-
 
 def getListOfGames(URL):
     response = urllib.request.urlopen(URL)
@@ -97,6 +88,12 @@ def getRefereeTable(URL):
         refDict[game['Referee']][2] += (int(game['HR'] or 0) + int(game['AR'] or 0))
 
     return sorted(refDict.items(), key=lambda x: (x[1][2], x[1][1], x[1][0]), reverse=True)
+
+def getData(seasonLeague):
+    for season in data:
+        for league in season[1]:
+            if season[0] + league[1] == seasonLeague:
+                return league[0]
 
 def getLeagueTable(URL):
     listOfGames = getListOfGames(URL)
