@@ -113,9 +113,6 @@ def getLeagueTable(URL):
     setOfTeams.discard('')
 
     for team in setOfTeams:
-        print(team)
-
-    for team in setOfTeams:
         teamDict[team] = [0,0,0,0,0,0,0,0]
 
     for game in listOfGames:
