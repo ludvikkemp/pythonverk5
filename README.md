@@ -45,7 +45,9 @@ played but also from previous years.
 There is so much info on each game that the possibilities for making all kinds of stats are almost endless.
 A list og explaination for a few of them can be found later in this document. We decided to include a list
 of referees sorted by how strict they are. Firstly on red card, then on yellow card and finally on how many
-fouls they gave. No real reason for that exactly except to furfill our own curiousity :) 
+fouls they gave. No real reason for that exactly except to furfill our own curiousity :)
+
+There is no data on referee stats for seasons 1993-1999 so the table is empty.
 
 ## Notes for Football Data
 

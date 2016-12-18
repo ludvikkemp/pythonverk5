@@ -17,7 +17,12 @@ def leaguetable(league):
     csv = getData(league)
     URL = 'http://www.football-data.co.uk/' + csv
 
-    tabledata = [getLeagueTable(URL), league[16:],
+    year = int(league[7:11])
+
+    if year < 2000: # No stats on refs exists
+        tabledata = [getLeagueTable(URL), league[16:]]
+    else:           # Stats on refs exists
+        tabledata = [getLeagueTable(URL), league[16:],
                  getRefereeTable(URL), 'Referee Stats']
 
     return render_template('enleaguetable.html', data=tabledata)
@@ -105,10 +110,17 @@ def getLeagueTable(URL):
 
     teamDict = {}
 
+    setOfTeams.discard('')
+
+    for team in setOfTeams:
+        print(team)
+
     for team in setOfTeams:
         teamDict[team] = [0,0,0,0,0,0,0,0]
 
     for game in listOfGames:
+        if game['HomeTeam'] == '':
+            continue
         teamDict[game['HomeTeam']][0] += 1
         teamDict[game['AwayTeam']][0] += 1
         teamDict[game['HomeTeam']][4] += int(game['FTHG'] or 0)
